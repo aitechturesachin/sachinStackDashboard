@@ -108,7 +108,6 @@ export default function FunnelChartBox() {
       {/* Bars */}
       <div className="funnel-chart">
         {sorted.map((step) => {
-          // width as % of max; keep a visual floor so tiny values still show
           const pct = clamp((step.value / maxVal) * 100, 12, 100);
           const left = (100 - pct) / 2; // center it
           return (
