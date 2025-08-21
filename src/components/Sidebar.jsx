@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import {
   FaChartPie, FaPlug, FaRobot, FaChartLine,
   FaLightbulb, FaChartBar, FaCog, FaQuestionCircle

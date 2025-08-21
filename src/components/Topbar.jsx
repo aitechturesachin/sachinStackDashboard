@@ -1,4 +1,3 @@
-// components/Topbar.jsx
 import { FiBell } from "react-icons/fi";
 
 const Topbar = () => {

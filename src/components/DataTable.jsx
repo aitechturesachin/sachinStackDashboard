@@ -1,4 +1,3 @@
-// src/components/DataTable.jsx
 const rows = [
   {
     id: 1,

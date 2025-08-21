@@ -1,36 +1,6 @@
-// // src/components/Header.jsx
-// import { FaSearch, FaBell } from "react-icons/fa";
-
-// import logo from "../assets/man.png"; // Adjust the path as necessary
-
-// export default function Header() {
-//   return (
-//     <header className="header">
-//       <div className="search-bar">
-//         <FaSearch />
-//         <input type="text" placeholder="Search" />
-//       </div>
-
-//       <div className="user-profile">
-//         <FaBell className="notification-icon" />
-//         <div className="user-avatar">
-//           <img src={logo} alt="Emmanuel Godinho" />
-//           <span>Avatar</span>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-
-
-
-
-
 import { FaSearch, FaBell, FaBars, FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../theme/ThemeContext";
 import logo from "../assets/man.png"; // Adjust the path as necessary
-
 
 export default function Header({ onToggleSidebar }) {
   const { theme, toggle } = useTheme();
@@ -63,11 +33,9 @@ export default function Header({ onToggleSidebar }) {
 
         <FaBell className="notification-icon" />
         <div className="user-avatar">
-             <img src={logo} alt="Emmanuel Godinho" />
+          <img src={logo} alt="Emmanuel Godinho" />
           <span className="user-name">Avatar</span>
         </div>
-
-       
       </div>
     </header>
   );

@@ -1,4 +1,3 @@
-// src/components/Filters.jsx
 export default function Filters() {
   return (
     <section className="filters">

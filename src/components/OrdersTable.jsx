@@ -1,4 +1,3 @@
-// components/OrdersTable.jsx
 const orders = [
   {
     id: 1,
