@@ -1,18 +1,29 @@
-/* Removed Tailwind directives due to build error */
-/* If using Tailwind, ensure your build tool supports it */
-
+/* ================= THEME TOKENS ================= */
 :root {
+  /* Dark default */
   --bg: #0f172a;
   --panel: #111827;
-  --panel-2: #0b1220;
+  --sidebar: #0b1220;
   --text: #e5e7eb;
   --muted: #9aa4af;
   --primary: #38bdf8;
-  --accent: #8b5cf6;
-  --success: #22c55e;
-  --warn: #f59e0b;
+  --border: rgba(255, 255, 255, 0.06);
+  --funnel-1: #22d3ee;
+  --funnel-2: #38bdf8;
+  --funnel-3: #60a5fa;
 }
 
+[data-theme="light"] {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --sidebar: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --primary: #2563eb; /* nice blue on light */
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+/* ================= BASE ================= */
 * {
   box-sizing: border-box;
 }
@@ -28,26 +39,29 @@ body {
   color: var(--text);
 }
 
+/* ================= LAYOUT ================= */
 .dashboard-container {
   display: grid;
   grid-template-columns: 260px 1fr;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Sidebar */
 .sidebar {
-  background: #0b1220;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
   padding: 20px 16px;
+  position: relative;
+  z-index: 20;
+  transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
 }
-
 .logo h2 {
-  margin: 0 0 16px 0;
+  margin: 0 0 16px;
   font-weight: 800;
-  letter-spacing: 0.2px;
-  color: white;
+  color: var(--text);
 }
-
 .nav-menu .nav-section {
   margin-top: 18px;
 }
@@ -58,7 +72,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-
 .nav-menu ul {
   list-style: none;
   padding: 0;
@@ -70,16 +83,16 @@ body {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 10px;
-  color: #d6dde6;
+  color: var(--text);
   cursor: pointer;
   transition: background 0.15s ease;
 }
 .nav-menu li:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in oklab, var(--text) 8%, transparent);
 }
 .nav-menu li.active {
-  background: rgba(56, 189, 248, 0.18);
-  color: #eaf8ff;
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--text);
 }
 .nav-menu li svg {
   width: 16px;
@@ -89,24 +102,36 @@ body {
 /* Main */
 .main-content {
   padding: 20px 22px;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
-/* Header */
+/* ================= HEADER ================= */
 .header {
   display: flex;
-  justify-content: space-between;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 14px;
+}
+.hamburger {
+  display: none;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 .search-bar {
   display: flex;
   align-items: center;
   gap: 10px;
   background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
   padding: 10px 12px;
   border-radius: 10px;
-  width: min(420px, 100%);
+  /* width: min(480px, 100%); */
+  justify-self: start;
+  width: 80%;
+  justify-content: right;
 }
 .search-bar input {
   background: transparent;
@@ -118,10 +143,13 @@ body {
 .user-profile {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  width: 20%;
+
+  justify-content: end;
 }
 .notification-icon {
-  color: #cbd5e1;
+  color: var(--muted);
 }
 .user-avatar {
   display: flex;
@@ -130,15 +158,36 @@ body {
   background: var(--panel);
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
 }
 .user-avatar img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
+.user-name {
+  display: inline-block;
+}
 
-/* Filters */
+/* Theme toggle button */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+.theme-toggle:active {
+  transform: scale(0.96);
+}
+
+/* ================= FILTERS ================= */
 .filters {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -147,7 +196,7 @@ body {
 }
 .filter-group {
   background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 10px 12px;
 }
@@ -160,9 +209,9 @@ body {
 .filter-group select,
 .filter-group input[type="date"] {
   width: 100%;
-  background: #0f172a;
+  background: var(--bg);
   color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
 }
@@ -172,7 +221,7 @@ body {
   gap: 8px;
 }
 
-/* Stat cards */
+/* ================= STAT CARDS ================= */
 .stats-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -183,8 +232,12 @@ body {
   display: grid;
   grid-template-columns: 54px 1fr;
   gap: 14px;
-  background: linear-gradient(180deg, #101827, #0d1524);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--panel) 92%, transparent),
+    color-mix(in oklab, var(--panel) 100%, transparent)
+  );
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
 }
@@ -194,36 +247,35 @@ body {
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: rgba(56, 189, 248, 0.18);
-  color: #e0f7ff;
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--text);
 }
 .stat-icon.orders {
-  background: rgba(139, 92, 246, 0.2);
-  color: #ede9fe;
+  background: color-mix(in oklab, #8b5cf6 22%, transparent);
 }
 .stat-icon.customers {
-  background: rgba(34, 197, 94, 0.2);
-  color: #dcfce7;
+  background: color-mix(in oklab, #22c55e 22%, transparent);
 }
 .stat-content h3 {
   margin: 0;
   font-size: 14px;
-  color: #cbd5e1;
+  color: var(--muted);
 }
 .stat-value {
   font-size: 28px;
   font-weight: 800;
   margin-top: 6px;
+  color: var(--text);
 }
 .stat-change {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #86efac;
+  color: #22c55e;
   font-size: 12px;
 }
 
-/* Charts */
+/* ================= CHARTS ================= */
 .charts-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -232,7 +284,7 @@ body {
 }
 .chart-container {
   background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
 }
@@ -245,11 +297,12 @@ body {
 .chart-header h3 {
   margin: 0;
   font-size: 16px;
+  color: var(--text);
 }
 .time-filter {
-  background: #0f172a;
+  background: var(--bg);
   color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 6px 8px;
 }
@@ -257,20 +310,33 @@ body {
   font-size: 22px;
   font-weight: 700;
   margin: 6px 0 10px;
+  color: var(--text);
 }
 .chart-description {
   color: var(--muted);
   font-size: 13px;
   margin-top: 10px;
 }
-
-/* Recharts wrapper */
 .bar-chart {
   width: 100%;
   height: 260px;
 }
 
-/* Funnel (CSS) */
+/* stack two charts in the right column
+.chart-stack {
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: 16px;
+} */
+
+/* Funnel */
+/* in src/styles/stackStyle.css */
+
+/* Dynamic funnel */
+
+.funnel-legend .legend-item strong {
+  color: var(--text);
+}
 .funnel-chart {
   display: grid;
   gap: 10px;
@@ -279,9 +345,10 @@ body {
 .funnel-step {
   height: 28px;
   border-radius: 999px;
-  background: var(--primary);
-  opacity: 0.85;
+  transition: width 240ms ease, margin 240ms ease;
+  opacity: 0.95;
 }
+
 .funnel-step.step-1 {
   width: 100%;
   background: #22d3ee;
@@ -296,7 +363,6 @@ body {
   margin-left: 36px;
   background: #60a5fa;
 }
-
 .funnel-legend {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -307,6 +373,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
 }
 .legend-dot {
   width: 10px;
@@ -324,10 +391,10 @@ body {
   background: #60a5fa;
 }
 
-/* Table */
+/* ================= TABLE ================= */
 .data-table {
   background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
   margin-top: 18px;
@@ -340,13 +407,15 @@ body {
 .data-table thead th {
   text-align: left;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--muted);
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
 }
 .data-table tbody td {
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
 }
 .status {
   padding: 4px 8px;
@@ -356,38 +425,177 @@ body {
 }
 .status.pending {
   background: rgba(245, 158, 11, 0.18);
-  color: #fbbf24;
+  color: #b45309;
 }
 .status.delivered {
   background: rgba(34, 197, 94, 0.18);
-  color: #86efac;
+  color: #15803d;
 }
-.status.processing {
+.status.in-transit {
   background: rgba(56, 189, 248, 0.18);
-  color: #7dd3fc;
+  color: #0e7490;
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
+/* ================= RESPONSIVE ================= */
+/* ≤ 1024px: drawer sidebar, stacked charts, filters 3 cols */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: 0 0 0 transparent;
+  }
+  .sidebar.show {
+    transform: translateX(0);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 15;
+  }
+
+  .hamburger {
+    display: inline-flex;
+  }
+  .search-bar {
+    width: 100%;
+  }
+  .user-name {
+    display: none;
+  }
+
+  .filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .stats-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .charts-section {
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: 920px) {
-  .dashboard-container {
-    grid-template-columns: 1fr;
-  }
-  .sidebar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-}
+
+/* ≤ 720px: filters 2 cols; stats 1 col; table -> cards */
 @media (max-width: 720px) {
   .filters {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .stats-cards {
+    grid-template-columns: 1fr;
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .search-bar {
+    padding: 8px 10px;
+  }
+
+  .data-table table thead {
+    display: none;
+  }
+  .data-table table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table td {
+    display: block;
+    width: 100%;
+  }
+  .data-table tr {
+    background: color-mix(in oklab, var(--panel) 98%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 8px;
+  }
+  .data-table td {
+    border: none;
+    padding: 8px 10px;
+    position: relative;
+    padding-left: 120px;
+  }
+  .data-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+/* ≤ 420px: single-column filters; smaller text */
+@media (max-width: 420px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+  .chart-value {
+    font-size: 18px;
+  }
+  .stat-value {
+    font-size: 24px;
+  }
+}
+
+/* KPI tiles row (inside chart-container) */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.kpi-tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.kpi-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kpi-value {
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.kpi-delta {
+  font-size: 12px;
+  font-weight: 700;
+}
+.kpi-delta.up {
+  color: #22c55e;
+}
+.kpi-delta.down {
+  color: #ef4444;
+}
+
+/* Make KPI row responsive */
+@media (max-width: 1024px) {
+  .kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .kpi-row {
     grid-template-columns: 1fr;
   }
 }

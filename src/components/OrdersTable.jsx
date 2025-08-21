@@ -25,14 +25,14 @@ const orders = [
     product: "White sesame",
     qty: 30,
     amount: 150,
-    status: "In Progress",
+    status: "In-Transit",
   },
 ];
 
 const statusClass = {
   Pending: "bg-yellow-400 text-black",
   Delivered: "bg-green-500 text-white",
-  "In Progress": "bg-blue-400 text-white",
+  "In-Transit": "bg-blue-400 text-white",
 };
 
 const OrdersTable = () => {

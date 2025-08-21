@@ -16,7 +16,7 @@ const Topbar = () => {
           alt="User"
           className="w-10 h-10 rounded-full"
         />
-        <span>Emmanuel Godinho</span>
+        <span>Avatar</span>
       </div>
     </div>
   );

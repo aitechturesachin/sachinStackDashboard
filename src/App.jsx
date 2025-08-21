@@ -9,6 +9,7 @@ import Sidebar from "./components/Sidebar";
 import StatCards from "./components/StatCard";
 import "./index.css";
 import "./App.css";
+import LineChartBox from "./components/LineChartBox";
 
 export default function App() {
   return (
@@ -21,6 +22,9 @@ export default function App() {
         <Header />
         <Filters />
         <StatCards />
+        <section style={{ marginTop: "18px" }} className="">
+          <LineChartBox />
+        </section>
 
         <section className="charts-section">
           <BarChartBox />

@@ -35,7 +35,7 @@ export default function Filters() {
           <option>All</option>
           <option>Pending</option>
           <option>Delivered</option>
-          <option>Processing</option>
+          <option>In-Transit</option>
         </select>
       </div>
 
