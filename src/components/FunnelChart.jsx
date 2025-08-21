@@ -104,7 +104,6 @@ export default function FunnelChartBox() {
           <option>Year</option>
         </select>
       </div>
-
       {/* Bars */}
       <div className="funnel-chart">
         {sorted.map((step) => {
