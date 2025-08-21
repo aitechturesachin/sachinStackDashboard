@@ -284,6 +284,13 @@ body {
   gap: 16px;
   margin-top: 18px;
 }
+.chart-title {
+  color: #525252;
+  font-size: 18px;
+  font-family: "Figtree";
+  font-weight: 700;
+  word-wrap: break-word;
+}
 .chart-container {
   background: var(--panel);
   border: 1px solid var(--border);

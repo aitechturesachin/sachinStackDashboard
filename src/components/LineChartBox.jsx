@@ -878,6 +878,7 @@ export default function LineChartBox() {
       {/* Header (Figma) */}
       <div className="chart-header">
         <h3>Line Chart</h3>
+
         <select
           className="time-filter"
           value={range}
