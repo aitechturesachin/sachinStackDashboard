@@ -23,6 +23,7 @@ function StatCard({ icon: Icon, title, value, changeText }) {
   );
 }
 
+
 export default function StatCards() {
   return (
     <section className="stats-cards">
