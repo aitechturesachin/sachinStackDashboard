@@ -134,11 +134,6 @@ export default function FunnelChartBox() {
           </div>
         ))}
       </div>
-
-      <p className="chart-description">
-        Values update instantly when switching Week / Month / Year. Widths are
-        scaled to the largest category for the selected period.
-      </p>
     </div>
   );
 }

@@ -607,9 +607,8 @@
 //   const series = useMemo(() => toTwoSeries(range), [range]);
 
 //   const { theme } = useTheme();
-//   const isDark = theme === "dark"; // not used for card bg; figma wants a white card
+//   const isDark = theme === "dark"; 
 
-//   // Figma tones
 //   const axisColor = "rgba(0,0,0,0.24)"; // Y ticks/labels
 //   const gridColor = "rgba(0,0,0,0.06)"; // light grid
 //   const cyan = "#27D0FC";
@@ -635,12 +634,12 @@
 
 //   return (
 //     <div className="chart-container ">
-//       {/* Header row like your Figma */}
-//       <div className="line-figma__header">
-//         <div className="line-figma__title">Line Chart</div>
-//         <div className="line-figma__pill">
+      
+//       <div className="line-chart__header">
+//         <div className="line-chart__title">Line Chart</div>
+//         <div className="line-chart__pill">
 //           <select
-//             className="line-figma__select"
+//             className="line-chart__select"
 //             value={range}
 //             onChange={(e) => setRange(e.target.value)}
 //             aria-label="Select range"
@@ -649,7 +648,7 @@
 //             <option>Month</option>
 //             <option>Year</option>
 //           </select>
-//           <span className="line-figma__caret" />
+//           <span className="line-chart__caret" />
 //         </div>
 //       </div>
 
@@ -701,7 +700,6 @@
 //               formatter={(v) => (v === "a" ? "Current" : "Compare")}
 //             />
 
-//             {/* Lines with small round dots, no area fill (Figma look) */}
 //             <Line
 //               type="monotone"
 //               dataKey="a"
@@ -847,11 +845,10 @@ export default function LineChartBox() {
   );
 
   const { theme } = useTheme();
-  const isDark = theme === "dark"; // (card itself is white per figma)
+  const isDark = theme === "dark"; 
 
-  // Figma palette
-  const axisColor = "rgba(0,0,0,0.24)";
-  const gridColor = "rgba(0,0,0,0.06)";
+  const axisColor =  isDark ? "#9aa4af" : "#6b7280";
+  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
   const cyan = "#27D0FC"; // series A
   const mint = "#92FE9D"; // series B
 
@@ -875,7 +872,6 @@ export default function LineChartBox() {
 
   return (
     <div className="chart-container">
-      {/* Header (Figma) */}
       <div className="chart-header">
         <h3>Line Chart</h3>
 
@@ -931,12 +927,12 @@ export default function LineChartBox() {
                 borderRadius: 8,
               }}
             />
-            <Legend
+            {/* <Legend
               verticalAlign="top"
               height={24}
               iconType="plainline"
               formatter={(v) => (v === "a" ? "Series A" : "Series B")}
-            />
+            /> */}
 
             {/* Lines – bold stroke + small round dots (white ring) */}
             <Line

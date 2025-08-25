@@ -127,7 +127,6 @@
 //             />
 //             {/* One bar: with gray “track” background + gradient fill + 16px radius */}
 //             <defs>
-//               {/* Aqua → green like your Figma gradient */}
 //               <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
 //                 <stop offset="0%" stopColor="rgba(0, 201, 255, 0.85)" />
 //                 <stop offset="100%" stopColor="rgba(146, 254, 157, 0.85)" />
@@ -228,14 +227,12 @@ export default function BarChartBox() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Figma-like axis + grid tones (prefer light look inside the card)
   const axis = {
-    stroke: "rgba(0,0,0,0.40)", // label color in Figma snippet
-    grid: "rgba(0,0,0,0.06)",
+    stroke: isDark ? "#9aa4af" : "#6b7280",
+    grid: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
     cursor: "rgba(0,0,0,0.04)",
   };
 
-  // Build custom ticks: top, 50%, 10%, 0 (like the Figma)
   const topTick = useMemo(
     () => niceTop(Math.max(...data.map((d) => d.value), 1)),
     [data]
@@ -248,23 +245,11 @@ export default function BarChartBox() {
 
   return (
     <div className="chart-container">
-      {/* Header (Figma: title + big total + pill) */}
-      <div className="chart-header figma-header">
+      <div className="chart-header bar-chart-header">
         <div className="figma-heading">
           <h3>Bar Chart</h3>
           <div>{money(total)}</div>
         </div>
-
-        {/* <select
-            className="figma-select"
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-            aria-label="Select range"
-          >
-            <option>Week</option>
-            <option>Month</option>
-            <option>Year</option>
-          </select> */}
 
         <select
           className="time-filter"
@@ -275,7 +260,6 @@ export default function BarChartBox() {
           <option>Month</option>
           <option>Year</option>
         </select>
-        {/* <span className="figma-caret" /> */}
       </div>
 
       {/* Chart */}
@@ -287,10 +271,8 @@ export default function BarChartBox() {
             barGap={6}
             margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
           >
-            {/* Subtle grid (vertical off like your figma) */}
             <CartesianGrid stroke={axis.grid} vertical={false} />
 
-            {/* X / Y axes matching figma tones */}
             <XAxis
               dataKey="label"
               stroke={axis.stroke}
@@ -318,9 +300,7 @@ export default function BarChartBox() {
               }}
             />
 
-            {/* One bar: with gray “track” background + gradient fill + 16px radius */}
             <defs>
-              {/* Aqua → green like your Figma gradient */}
               <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="rgba(0, 201, 255, 0.85)" />
                 <stop offset="100%" stopColor="rgba(146, 254, 157, 0.85)" />
@@ -336,12 +316,6 @@ export default function BarChartBox() {
           </BarChart>
         </ResponsiveContainer>
       </div>
-
-      {/* Optional: small caption like your mock */}
-      <p className="chart-description figma-caption">
-        Styled to match your Figma: rounded tracks, aqua→green gradient, big
-        total.
-      </p>
     </div>
   );
 }

@@ -5,24 +5,46 @@
   --panel: #111827;
   --bar-track: #33445b;
   --sidebar: #0b1220;
-  --text: #e5e7eb;
+  --text: #ffffff;
   --muted: #9aa4af;
-  --primary: #38bdf8;
+  --primary: #00c9ff; /* cyan on dark */
   --border: rgba(255, 255, 255, 0.06);
   --funnel-1: #22d3ee;
   --funnel-2: #38bdf8;
   --funnel-3: #60a5fa;
+  --status-pending-bg: #7a4800;
+  --status-pending-text: #ff9500;
+  --status-delivered-bg: #057613;
+  --status-delivered-text: #07d91e;
+  --status-in-transit-bg: #005d7a;
+  --status-in-transit-text: #25cffd;
+
+  --icon-stat-bg: #005366; /* light cyan bg for stat icons */
+  --icon-stat-font: #00c9ff; /* cyan icon color */
 }
 
 [data-theme="light"] {
-  --bg: #f7f8fb;
+  --bg: #f2f2f2;
   --panel: #ffffff;
   --sidebar: #ffffff;
-  --text: #0f172a;
+  --text: #525252;
   --muted: #6b7280;
-  --primary: #2563eb; /* nice blue on light */
+  --table-th-font: #ffffff;
+  --table-td-font: #454545;
+  --primary: #00c9ff; /* nice blue on light */
   --border: rgba(0, 0, 0, 0.08);
   --bar-track: #f5f5f5;
+
+  --status-pending-bg: #fff0db;
+  --status-pending-text: #ff9500;
+  --status-delivered-bg: #e6fee9;
+  --status-delivered-text: #07d91e;
+  --status-in-transit-bg: #e6f9ff;
+  --status-in-transit-text: #25cffd;
+  --icon-stat-bg: #e5faff; /* light cyan bg for stat icons */
+  --icon-stat-font: #00c9ff; /* cyan icon color */
+  --search-bar-bg: #f5f5f5; /* light gray bg for search bar */
+  --search-bar-border: #e7e7e7; /* light gray border for search bar */
 }
 
 /* ================= BASE ================= */
@@ -59,6 +81,17 @@ body {
   transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease,
     border-color 0.2s ease;
 }
+.nav-menu a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+.nav-menu a.active {
+  font-weight: 600; /* or your highlight styles */
+}
+
 .logo h2 {
   margin: 0 0 16px;
   font-weight: 800;
@@ -126,7 +159,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--panel);
+  background: var(--search-bar-bg);
   border: 1px solid var(--border);
   padding: 10px 12px;
   border-radius: 10px;
@@ -231,7 +264,7 @@ body {
   margin-top: 18px;
 }
 .stat-card {
-  display: grid;
+  /* display: grid; */
   grid-template-columns: 54px 1fr;
   gap: 14px;
   background: linear-gradient(
@@ -247,27 +280,34 @@ body {
   width: 54px;
   height: 54px;
   display: grid;
+  margin-bottom: 8px;
   place-items: center;
   border-radius: 12px;
-  background: color-mix(in oklab, var(--primary) 22%, transparent);
-  color: var(--text);
+  background: var(--icon-stat-bg);
+  /* background: color-mix(in oklab, var(--primary) 22%, transparent); */
+  color: var(--icon-stat-font);
 }
 .stat-icon.orders {
-  background: color-mix(in oklab, #8b5cf6 22%, transparent);
+  background: var(--icon-stat-bg);
+
+  /* background: color-mix(in oklab, #8b5cf6 22%, transparent); */
 }
 .stat-icon.customers {
-  background: color-mix(in oklab, #22c55e 22%, transparent);
+  background: var(--icon-stat-bg);
+
+  /* background: color-mix(in oklab, #22c55e 22%, transparent); */
 }
 .stat-content h3 {
   margin: 0;
   font-size: 14px;
-  color: var(--muted);
+  color: var(--text);
 }
 .stat-value {
   font-size: 28px;
   font-weight: 800;
-  margin-top: 6px;
+  /* margin-top: 6px; */
   color: var(--text);
+  width: 50%;
 }
 .stat-change {
   display: flex;
@@ -275,6 +315,19 @@ body {
   gap: 6px;
   color: #22c55e;
   font-size: 12px;
+  margin-top: 24px;
+}
+.stat-change-info {
+  width: 50%;
+
+  text-align: right;
+  p {
+    color: #00000066;
+    text-align: right;
+
+    /* Paragraph/P2/Medium */
+    font-family: Figtree;
+  }
 }
 
 /* ================= CHARTS ================= */
@@ -405,10 +458,11 @@ body {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 16px;
+  /* padding: 16px; */
   margin-top: 18px;
   overflow-x: auto;
 }
+
 .data-table table {
   width: 100%;
   border-collapse: collapse;
@@ -416,15 +470,20 @@ body {
 .data-table thead th {
   text-align: left;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--table-th-font);
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
+.data-table thead {
+  background: var(--primary);
+  border-radius: 8px;
+}
+
 .data-table tbody td {
   padding: 12px;
   border-bottom: 1px solid var(--border);
-  color: var(--text);
+  color: var(--table-td-font);
 }
 .status {
   padding: 4px 8px;
@@ -433,16 +492,16 @@ body {
   font-weight: 600;
 }
 .status.pending {
-  background: rgba(245, 158, 11, 0.18);
-  color: #b45309;
+  background: var(--status-pending-bg);
+  color: var(--status-pending-text);
 }
 .status.delivered {
-  background: rgba(34, 197, 94, 0.18);
-  color: #15803d;
+  background: var(--status-delivered-bg);
+  color: var(--status-delivered-text);
 }
 .status.in-transit {
-  background: rgba(56, 189, 248, 0.18);
-  color: #0e7490;
+  background: var(--status-in-transit-bg);
+  color: var(--status-in-transit-text);
 }
 
 /* ================= RESPONSIVE ================= */
@@ -552,6 +611,7 @@ body {
   }
   .stat-value {
     font-size: 24px;
+    width: 50%;
   }
 }
 
@@ -609,7 +669,6 @@ body {
   }
 }
 
-/* Figma-styled card */
 .chart-figma {
   background: #ffffff; /* white card */
   border-radius: 32px !important;
@@ -619,7 +678,7 @@ body {
 }
 
 /* Header */
-.figma-header {
+.bar-chart-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -687,9 +746,8 @@ body {
   font-size: 12px;
 }
 
-/* ======== Figma-styled Funnel Card ======== */
 .funnel-figma {
-  background: #1f2937; /* dark slate (Figma) */
+  background: #1f2937;
   border-radius: 32px;
   padding: 24px;
   color: #fff;
@@ -717,7 +775,7 @@ body {
   align-items: center;
   gap: 6px;
   padding: 4px 8px 4px 12px;
-  background: #35467d; /* bluish pill from Figma */
+  background: #35467d;
   border-radius: 6px;
 }
 .funnel-select {
@@ -793,7 +851,6 @@ body {
   }
 }
 
-/* ===== Figma-styled Line card (white) ===== */
 .line-figma {
   background: #ffffff;
   border-radius: 32px;
@@ -803,13 +860,13 @@ body {
 }
 
 /* Header row */
-.line-figma__header {
+.line-chart__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
-.line-figma__title {
+.line-chart__title {
   font-family: "Figtree", ui-sans-serif, system-ui;
   font-weight: 700;
   font-size: 18px;
@@ -817,8 +874,7 @@ body {
   color: #525252;
 }
 
-/* Figma-like pill select */
-.line-figma__pill {
+.line-chart__pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -826,7 +882,7 @@ body {
   background: #f5f5f5;
   border-radius: 6px;
 }
-.line-figma__select {
+.line-chart__select {
   appearance: none;
   border: none;
   outline: none;
@@ -836,7 +892,7 @@ body {
   cursor: pointer;
   padding-right: 16px;
 }
-.line-figma__caret {
+.line-chart__caret {
   width: 8px;
   height: 4px;
   border: 1.45px solid #525252;

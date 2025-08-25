@@ -13,10 +13,14 @@ function StatCard({ icon: Icon, title, value, changeText }) {
       </div>
       <div className="stat-content">
         <h3>{title}</h3>
-        <div className="stat-value">{value}</div>
+
         <div className="stat-change positive">
-          <FaArrowUp />
-          <span>{changeText}</span>
+          <div className="stat-value">{value}</div>
+          <div className="stat-change-info">
+            <FaArrowUp />
+            <span>{changeText}</span>
+            <p>from last week</p>
+          </div>
         </div>
       </div>
     </div>
@@ -30,19 +34,19 @@ export default function StatCards() {
         icon={FaDollarSign}
         title="Total Revenue"
         value="$847,293"
-        changeText="5.1% from last week"
+        changeText="5.1%"
       />
       <StatCard
         icon={FaShoppingCart}
         title="Orders"
         value="$2,847"
-        changeText="8.2% from last week"
+        changeText="8.2% "
       />
       <StatCard
         icon={FaUsers}
         title="Customers"
         value="12,483"
-        changeText="7.3% from last week"
+        changeText="7.3%"
       />
     </section>
   );

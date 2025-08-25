@@ -1,3 +1,5 @@
+// import { useTheme } from "../theme/ThemeContext";
+
 const rows = [
   {
     id: 1,
@@ -29,6 +31,9 @@ const rows = [
 ];
 
 export default function DataTable() {
+  // const { theme } = useTheme();
+  // const isDark = theme === "dark";
+
   return (
     <section className="data-table">
       <table>
